@@ -1,20 +1,20 @@
 import { Router } from 'express'
-import { Carrito } from '../models/index.js'
+import { CarritoDetalle } from '../models/index.js'
 
-export const CarritoRouteo = Router()
+export const CarritoDetalleRouteo = Router()
 
-CarritoRouteo.get('/', async (req, res) => {
+CarritoDetalleRouteo.get('/', async (req, res) => {
     try {
-        const carritos = await Carrito.findAll()   
+        const carritos = await CarritoDetalle.findAll()   
         res.json(carritos)
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los carritos' })
     }
 })
 
-CarritoRouteo.get('/:id', async (req, res) => {
+CarritoDetalleRouteo.get('/:id', async (req, res) => {
     try {
-        const carrito = await Carrito.findByPk(req.params.id)   
+        const carrito = await CarritoDetalle.findByPk(req.params.id)   
         if (carrito) {
             res.json(carrito)
         }
@@ -26,18 +26,18 @@ CarritoRouteo.get('/:id', async (req, res) => {
     }
 })
 
-CarritoRouteo.post('/', async (req, res) => {
+CarritoDetalleRouteo.post('/', async (req, res) => {
     try {
-        const nuevoCarrito = await Carrito.create(req.body)
+        const nuevoCarrito = await CarritoDetalle.create(req.body)
         res.status(201).json(nuevoCarrito)
     } catch (error) {
         res.status(500).json({ error: 'Error al crear el carrito' })
     }
 })
 
-CarritoRouteo.put('/:id', async (req, res) => {
+CarritoDetalleRouteo.put('/:id', async (req, res) => {
     try {
-        const carrito = await Carrito.findByPk(req.params.id)
+        const carrito = await CarritoDetalle.findByPk(req.params.id)
         if (carrito) {
             await carrito.update(req.body)
             res.json(carrito)
@@ -53,9 +53,9 @@ CarritoRouteo.put('/:id', async (req, res) => {
 })
 
 
-CarritoRouteo.delete('/:id', async (req, res) => {
+CarritoDetalleRouteo.delete('/:id', async (req, res) => {
     try {
-        const carrito = await Carrito.findByPk(req.params.id)
+        const carrito = await CarritoDetalle.findByPk(req.params.id)
         if (carrito) {
             await carrito.destroy()
             res.json({ message: 'Carrito eliminado' })
@@ -68,13 +68,5 @@ CarritoRouteo.delete('/:id', async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar el carrito' })
     }
 })
-
-
-
-
-
-
-
-
 
 
