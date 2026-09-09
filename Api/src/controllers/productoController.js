@@ -21,7 +21,26 @@ export const obtenerProductoPorId = async (req, res) => {
 
 export const crearProducto = async (req, res) => {
     try { 
-      res.status(201).json(await Producto.create(req.body)); 
+
+      if (!req.body) {
+        return res.status(400).json({ error: 'No se recibieron datos' });
+      }
+
+      const nombre = req.body.nombre;
+      const precio = req.body.precio;
+      const stock = req.body.stock;
+      const imagen = req.body.imagen;
+
+      if (nombre != null && nombre.toString() != "" &&
+          precio != null && precio != "0" &&
+          stock != null && stock != "0" &&
+          imagen != null && imagen.toString() != ""
+      ) {
+        const nuevoProducto = await Producto.create(req.body);
+        return res.status(201).json(nuevoProducto); 
+      } else {
+        return res.status(400).json({ error: 'Faltan datos obligatorios' });
+      }
     } 
     catch (e) { 
       res.status(400).json({ error: e.message }); 
